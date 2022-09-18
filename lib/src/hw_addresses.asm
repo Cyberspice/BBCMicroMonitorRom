@@ -1,0 +1,33 @@
+
+; UART (usually a cartridge) using the SCN2681 Dual UART.
+UART_MODE_A       = &FC60  ; RW
+UART_STATUS_A     = &FC61  ; R
+UART_CLOCK_A      = &FC61  ; W
+UART_COMMAND_A    = &FC62  ; W
+UART_RX_REG_A     = &FC63  ; R
+UART_TX_REG_A     = &FC63  ; W
+UART_INPUT_CHG    = &FC64  ; R
+UART_AUX_CONTROL  = &FC64  ; W
+UART_INT_STATUS   = &FC65  ; R
+UART_INT_MASK     = &FC65  ; W
+UART_TIMER_UPPER  = &FC66  ; RW
+UART_TIMER_LOWER  = &FC67  ; RW
+UART_INPUT_PORTS  = &FC6d  ; R
+UART_OUTPUT_PORTS = &FC6d  ; W
+UART_START_COUNT  = &FC6e  ; R
+UART_SET_OUTS     = &FC6e  ; W
+UART_STOP_COUNT   = &FC6f  ; R
+UART_RESET_OUTS   = &FC6f  ; W
+
+; Plus 1 hardware
+ADC               = &FC70
+PRINTER           = &FC71
+ADC_PRT_STATUS    = &FC72
+ROMSTB_LATCH      = &FC73
+
+; Main HW (Beeb, Master, Electron)
+IF _ELECTRON_
+ULA_ROM_LATCH     = &FE05
+ELSE
+ULA_ROM_LATCH     = &FE30
+ENDIF

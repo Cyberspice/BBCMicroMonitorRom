@@ -1,0 +1,9 @@
+.DS_Store
+
+*.bak
+*.bin
+*.rom
+*.ssd
+
+build
+
