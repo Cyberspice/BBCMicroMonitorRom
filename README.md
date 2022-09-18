@@ -18,7 +18,7 @@ value reading and setting.
 
 The monitor supports help.
 
-!(Example help)[/images/help.png]
+![Example help](/images/help.png)
 
 ## Star Commands
 
@@ -30,7 +30,7 @@ preceded by + is specified it disassembles at least RANGE bytes. If
 END is specified it disassembles at least up to END in memory. If ROM
 is specified it will switch to that sideways ROM bank.
 
-!(Example use of MDISS)[/images/mdiss.png]
+![Example use of MDISS](/images/mdiss.png)
 
 MDUMP ADDRESS (<+RANGE>|<END>) (<ROM>)
 
@@ -40,7 +40,7 @@ specified it displays at least RANGE bytes. If END is specified it
 displays bytes up to END in memory. If ROM is specified it will switch
 to that sideways ROM bank.
 
-!(Example use of MDUMP)[/images/mdump.png]
+![Example use of MDUMP](/images/mdump.png)
 
 MGO ADDRESS
 
@@ -77,7 +77,7 @@ will be presented after which you may type a new byte value. Return
 updates the value, at which point the next address and byte value
 will be displayed. This is repeated until ESC is pressed.
 
-!(Example use of set memory)[/images/s.png]
+![Example use of set memory](/images/s.png)
 
 R - Show/set the shadow register values
 
@@ -87,7 +87,7 @@ All of the values may be updated except the program counter by
 specifying the register name, equals, and value or flag bit 
 characters, as an argument.
 
-!(Example use of set registers)[/images/r_set.png]
+![Example use of set registers](/images/r_set.png)
 
 ## Breakpoints
 
@@ -104,7 +104,7 @@ When a sequence BRK BRK is seen, execution is stopped, the registers
 are displayed, and a prompt is shown which allows you to return to
 the monitor command line or continue execution.
 
-!(Example use of a breakpoint)[/images/brk.png]
+![Example use of a breakpoint](/images/brk.png)
 
 The example above shows a small routine which prints 0 to 9.
 The breakpoint is set in the loop. The user continues the first
