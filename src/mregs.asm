@@ -83,7 +83,11 @@ mregs_jump_high=&101
   rts
 .mregs_set_read_val_2
   iny
-  jmp read_hex_8bit
+  jsr read_hex_8bit
+  bcs mregs_set_read_val_3
+  lda value_low
+.mregs_set_read_val_3
+  rts
 
 ; Set the accumulator shadow
 

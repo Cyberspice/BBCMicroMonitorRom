@@ -41,7 +41,7 @@
   sta p0_cmd_low
   lda #>COMMAND_BUF
   sta p0_cmd_high
-  jsr read_hex_8bit
+  jsr read_hex_8bit       ; Read the data
   bcc mset_lang_data_good
   jmp err_illegal_value   ; Should never be called as validated on input
 
@@ -49,6 +49,7 @@
 
 .mset_lang_data_good
   ldy #0
+  lda value_low
   sta (p0_rom_ptr_low),y  ; Store byte
   inc p0_rom_ptr_low      ; Increment address
   bne mset_lang_next
@@ -104,7 +105,6 @@
 
 .mset_set_data_loop
   jsr read_hex_8bit       ; Read the data
-  sta value_low           ; Save it
   tya                     ; Save the position in the command line
   pha
   ldy line_count          ; Get the position in memory
