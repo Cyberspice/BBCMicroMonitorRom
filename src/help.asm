@@ -94,28 +94,28 @@
   jmp return
 
 .help_str
-	EQUB 13
-	EQUS "Monitor 1.00"
-	EQUB 13
-	EQUS "  MON"
-	EQUB 13
-	EQUB 0
+  EQUB 13
+  EQUS "Monitor 1.00"
+  EQUB 13
+  EQUS "  MON"
+  EQUB 13
+  EQUB 0
 
 .help_monitor
-	EQUB 13
-	EQUS "Monitor commands"
   EQUB 13
-  EQUS "  MDISS <mem start> <mem end>"
-	EQUB 13
-	EQUS "  MDUMP <mem start> <mem end>"
+  EQUS "Monitor commands"
+  EQUB 13
+  EQUS "  MDISS <mem start> <mem end> (<id>)"
+  EQUB 13
+  EQUS "  MDUMP <mem start> <mem end> (<id>)"
   EQUB 13
   EQUS "  MGO   <addr>"
   EQUB 13
   EQUS "  MSET  <mem start> <byte> (<byte>)..."
-	EQUB 13
-	EQUS "End addresses may be replaced by +<length>"
-	EQUB 13
-	EQUB 0
+  EQUB 13
+  EQUS "End addresses may be replaced by +<length>"
+  EQUB 13
+  EQUB 0
 
 .help_command
   EQUS "MON"
