@@ -41,6 +41,10 @@
   sta p0_cmd_ptr_low
   lda #>COMMAND_BUF
   sta p0_cmd_ptr_high
+  ldy #0
+  lda (p0_cmd_ptr_low),y
+  cmp #13
+  beq mset_lang_next_addr
   jsr read_hex_8bit       ; Read the data
   bcc mset_lang_data_good
   jmp err_illegal_value   ; Should never be called as validated on input
@@ -51,6 +55,7 @@
   ldy #0
   lda value_low
   sta (p0_rom_ptr_low),y  ; Store byte
+.mset_lang_next_addr
   inc p0_rom_ptr_low      ; Increment address
   bne mset_lang_next
   inc p0_rom_ptr_high     ; Increment address high if page boundary
@@ -133,6 +138,8 @@
 .byte_char_input
   jsr OSRDCH
   bcs byte_char_input_err
+  cmp #13
+  beq byte_valid_char
   cmp #127
   beq byte_valid_char
   cmp #'0'
@@ -163,6 +170,14 @@
 .byte_input_loop
   jsr byte_char_input      ; Read a valid char
   bcs byte_input_err       ; Error (eg escape)
+  cmp #13
+  bne byte_input_not_cr    ; Not a CR
+  cpx #0                   ; CR at start of input means don't change
+  beq byte_input_valid     ; So exit
+  lda #7
+  jsr OSWRCH
+  jmp byte_input_loop      ; Otherwise just try and get the key again
+.byte_input_not_cr
   cmp #127                 ; Backspace/Delete
   bne byte_input_next      ; Valid char
   cpx #0                   ; If not at the start of the line...
