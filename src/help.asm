@@ -17,7 +17,7 @@
 
 ; Test if there's a help word
 
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp #13
   bne help_word
 
@@ -47,7 +47,7 @@
 ; up to the CR or space or dot
 
 .help_word_loop
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp #13               ; End of line?
   bne help_word_next
   cmp help_command,x

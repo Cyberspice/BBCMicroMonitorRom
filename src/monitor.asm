@@ -61,7 +61,12 @@ INCLUDE "service.asm"
 ; Library routines
 
 INCLUDE "../lib/src/print_hex.asm"
-INCLUDE "../lib/src/read_hex.asm"
+
+cmd_ptr = p0_cmd_ptr_low ; For read hex
+
+INCLUDE "../lib/src/char_to_hex.asm"
+INCLUDE "../lib/src/read_hex_8bit.asm"
+INCLUDE "../lib/src/read_hex_16bit.asm"
 
 ; Commands
 
@@ -79,4 +84,4 @@ INCLUDE "command.asm"
 
 .end
 
-SAVE "../monrom", start, end
+SAVE "monrom", start, end

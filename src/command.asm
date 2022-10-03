@@ -22,7 +22,7 @@ command_addr_high = &ab
   lda command_table,x
   beq command_not_found   ; End of table
 
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp #13                 ; End of line?
   bne command_next
   cmp command_table,x

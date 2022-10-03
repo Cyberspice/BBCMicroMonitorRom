@@ -107,9 +107,9 @@ COMMAND_BUF    = &700
 
 .mon_command
   lda #<COMMAND_BUF
-  sta p0_cmd_low
+  sta p0_cmd_ptr_low
   lda #>COMMAND_BUF
-  sta p0_cmd_high
+  sta p0_cmd_ptr_high
 
 ; X contains the offset to the first non white space char ie the
 ; command
@@ -117,12 +117,12 @@ COMMAND_BUF    = &700
   tay
 
 ; Load the first character and save it
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   pha
 
 ; Now check its followed by a space
   iny
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp #(' ' + 1)
   bcs mon_bad_command
   jsr skip_space
@@ -172,7 +172,7 @@ COMMAND_BUF    = &700
   EQUB 'D'
   EQUW mdiss
   EQUB 'G'
-  EQUW mgo
+  EQUW mgo_lang
   EQUB 'M'
   EQUW mdump
   EQUB 'Q'

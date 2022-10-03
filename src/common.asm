@@ -4,36 +4,6 @@
 
 MAX_BYTE_COUNT=8
 
-; Skip white space. (which is all control characters except carriage
-; return). Returns the last character in the accumulator.
-
-.skip_space
-  lda (p0_cmd_low),y
-  cmp #13
-  beq skip_space_done
-  cmp #33
-  bcs skip_space_done
-  iny
-  jmp skip_space
-.skip_space_done
-  rts
-
-; Tests for white space, line end or illegal characters following
-; a parameter. If its NOT followed by white space or end of line
-; then an error is raised. Returns the last character in the accumulator.
-
-.space_check
-  lda (p0_cmd_low),y     ; Test for line end or white space
-  cmp #13
-  beq space_check_done
-  cmp #' '
-  beq space_check_skip_space
-  jmp err_illegal_value
-.space_check_skip_space
-  jsr skip_space
-.space_check_done
-  rts
-
 ; Reads an address from the command line. If the address is not
 ; there it raises a bad command error. If it is invalid hex then
 ; an illegal value error is raised. The address is stored in
@@ -41,7 +11,7 @@ MAX_BYTE_COUNT=8
 ; character read
 
 .read_address
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp #13
   bne read_address_not_cr
   jmp err_bad_command
@@ -57,7 +27,37 @@ MAX_BYTE_COUNT=8
   lda value_high
   sta p0_rom_ptr_high  ; Save address
 
-  jmp space_check
+  ; --- Drop through ---
+
+; Tests for white space, line end or illegal characters following
+; a parameter. If its NOT followed by white space or end of line
+; then an error is raised. Returns the last character in the accumulator.
+
+.space_check
+  lda (p0_cmd_ptr_low),y     ; Test for line end or white space
+  cmp #13
+  bne space_check_not_cr
+  rts
+.space_check_not_cr
+  cmp #' '
+  beq skip_space
+  jmp err_illegal_value
+
+  ; --- Drop through ---
+
+; Skip white space. (which is all control characters except carriage
+; return). Returns the last character in the accumulator.
+
+.skip_space
+  lda (p0_cmd_ptr_low),y
+  cmp #13
+  beq skip_space_done
+  cmp #33
+  bcs skip_space_done
+  iny
+  jmp skip_space
+.skip_space_done
+  rts
 
 ; Print a space to the output
 
@@ -97,6 +97,7 @@ MAX_BYTE_COUNT=8
 	lda p0_rom_ptr_low
 	jmp print_hex
 
+; Print a byte as displayable character if possible
 
 .print_byte_as_char
 	cmp #' '
@@ -107,7 +108,6 @@ MAX_BYTE_COUNT=8
 	lda #'.'
 .print_byte_as_char_ascii
 	jmp OSWRCH
-
 
 ; Get a byte from the the current ROM pointer
 ; paging in the ROM specified by Y. X and Y are

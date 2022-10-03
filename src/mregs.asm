@@ -76,7 +76,7 @@ mregs_jump_high=&101
 ; it.
 
 .mregs_set_read_val
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp #'='               ; Test there's an equals
   beq mregs_set_read_val_2
   sec
@@ -129,7 +129,7 @@ mregs_jump_high=&101
 ; Set the flags register
 
 .mregs_set_flags
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp #'='               ; Test there's an equals
   bne mregs_illegal_value
   iny                    ; Next char should be a flag or - for all clear
@@ -142,7 +142,7 @@ mregs_jump_high=&101
   lda #0
   sta shadow_flags
 
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp #'-'               ; Clear flags character
   bne mregs_set_a_flag   ; May be a flag bit
   iny                    ; Next char
@@ -159,7 +159,7 @@ mregs_jump_high=&101
 
   pha                    ; Save the flag bit
   inx                    ; Skip to the flag character
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp mregs_flag_table,x
   beq mregs_flag_found   ; Is this flag?
 
@@ -181,7 +181,7 @@ mregs_jump_high=&101
   ora shadow_flags       ; Set the bit
   sta shadow_flags
   iny                    ; Next char
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp #(' ' + 1)
   bcs mregs_set_a_flag
   pla                    ; Throw away saved flags
@@ -193,7 +193,7 @@ mregs_jump_high=&101
 ; except for the flags which is one or more flag characters.
 
 .mregs_set_regs
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp #13                ; End of params?
   bne mregs_set_a_reg
   rts
@@ -208,7 +208,7 @@ mregs_jump_high=&101
 
 ; Look up register name
 
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp mregs_set_reg_table,x
   beq mregs_set_found
   inx
@@ -239,7 +239,7 @@ mregs_jump_high=&101
 ; BRK instruction is handled.
 
 .mregs
-  lda (p0_cmd_low),y
+  lda (p0_cmd_ptr_low),y
   cmp #13
   bne mregs_set
   jsr print_regs

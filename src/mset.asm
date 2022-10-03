@@ -38,9 +38,9 @@
 ; Parse the input
 
   lda #<COMMAND_BUF
-  sta p0_cmd_low
+  sta p0_cmd_ptr_low
   lda #>COMMAND_BUF
-  sta p0_cmd_high
+  sta p0_cmd_ptr_high
   jsr read_hex_8bit       ; Read the data
   bcc mset_lang_data_good
   jmp err_illegal_value   ; Should never be called as validated on input
